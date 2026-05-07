@@ -18,6 +18,7 @@
 │   ├── Q-learning_on_Maze.py
 │   └── training_result.png
 ├── 02_Kalman Filter/
+├── 03_Path Finding Algorithms/
 ├── README.md
 └── .gitignore
 ```
@@ -38,6 +39,16 @@
 - `kalman_filters_comparison.py`：温和非线性下三种滤波器的 Python 实现与对比实验。
 - `strong_nonlinear_ukf_comparison.py`：强非线性下对比 KF、EKF、UKF 的效果和计算时间。
 - `outputs/`：轨迹、误差曲线、RMSE 和耗时可视化。
+
+### 03_Path Finding Algorithms
+
+一个二维网格寻路实验，对比 DFS、BFS、Dijkstra 和 A*。
+
+当前内容：
+
+- `README.md`：四种寻路算法的特点、适用场景和运行方式。
+- `pathfinding_comparison.py`：统一地图下的四种算法实现与指标对比。
+- `outputs/pathfinding_comparison.png`：路径、搜索范围、路径长度、访问节点数和运行时间可视化。
 
 ## 推荐学习记录格式
 
