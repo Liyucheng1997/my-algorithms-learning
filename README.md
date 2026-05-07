@@ -19,6 +19,7 @@
 │   └── training_result.png
 ├── 02_Kalman Filter/
 ├── 03_Path Finding Algorithms/
+├── 04_RRT Family/
 ├── README.md
 └── .gitignore
 ```
@@ -49,6 +50,16 @@
 - `README.md`：四种寻路算法的特点、适用场景和运行方式。
 - `pathfinding_comparison.py`：统一地图下的四种算法实现与指标对比。
 - `outputs/pathfinding_comparison.png`：路径、搜索范围、路径长度、访问节点数和运行时间可视化。
+
+### 04_RRT Family
+
+一个二维连续空间路径规划实验，对比 RRT、RRT-Connect 和 RRT*。
+
+当前内容：
+
+- `README.md`：RRT family 的核心思想、算法差异和运行方式。
+- `rrt_family_comparison.py`：三种采样路径规划算法的 Python 实现与对比。
+- `outputs/rrt_family_comparison.png`：随机树、最终路径、路径长度、节点数和运行时间可视化。
 
 ## 推荐学习记录格式
 
