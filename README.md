@@ -30,12 +30,13 @@
 
 ### 02_Kalman Filter
 
-预留给 Kalman 滤波器学习内容。建议后续补充：
+一个二维目标跟踪实验，对比普通 Kalman Filter、Extended Kalman Filter 和 Unscented Kalman Filter。
 
-- `notes.md`：公式推导和直觉解释。
-- `kalman_1d.py`：一维位置估计示例。
-- `kalman_2d.py`：二维运动轨迹估计示例。
-- `README.md`：本主题的实验说明。
+当前内容：
+
+- `README.md`：问题设定、三种滤波器特点和学习顺序。
+- `kalman_filters_comparison.py`：三种滤波器的 Python 实现与对比实验。
+- `outputs/kalman_filters_comparison.png`：轨迹、误差曲线和 RMSE 可视化。
 
 ## 推荐学习记录格式
 
