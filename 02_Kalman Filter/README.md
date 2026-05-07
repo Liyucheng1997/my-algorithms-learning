@@ -10,6 +10,13 @@
 
 ## 问题设定
 
+本目录现在包含两个对比实验：
+
+- `kalman_filters_comparison.py`：温和非线性案例，主要演示 KF、EKF、UKF 的基础差异。
+- `strong_nonlinear_ukf_comparison.py`：强非线性案例，重点展示 UKF 在非线性更强时的效果优势，以及它付出的计算时间成本。
+
+### 案例一：温和非线性
+
 我们跟踪一个在二维平面运动的目标，状态向量为：
 
 ```text
@@ -40,6 +47,28 @@ z = [range, bearing]
 
 这个设定适合学习三种滤波器的差别，因为运动模型是线性的，但观测模型是非线性的。
 
+### 案例二：强非线性
+
+强非线性案例使用更接近雷达/定位融合的问题：
+
+```text
+x = [px, py, speed, heading, turn_rate]
+```
+
+运动模型是 coordinated turn，也就是带转弯率的非线性运动：
+
+```text
+px, py 会随 speed、heading、turn_rate 非线性变化
+```
+
+观测模型为：
+
+```text
+z = [range_from_origin, bearing_from_origin, range_from_landmark]
+```
+
+这里同时有原点距离、原点方位角和到固定地标的距离。这个观测函数比单一极坐标观测更弯曲，EKF 的一阶线性化更容易损失信息，UKF 的 sigma points 更容易体现优势。
+
 ## 三种方法的核心区别
 
 | 方法 | 适合场景 | 如何处理非线性 | 优点 | 缺点 |
@@ -54,9 +83,11 @@ z = [range, bearing]
 02_Kalman Filter/
 ├── README.md
 ├── kalman_filters_comparison.py
+├── strong_nonlinear_ukf_comparison.py
 ├── requirements.txt
 └── outputs/
-    └── kalman_filters_comparison.png
+    ├── kalman_filters_comparison.png
+    └── strong_nonlinear_ukf_comparison.png
 ```
 
 ## 运行方式
@@ -67,10 +98,17 @@ z = [range, bearing]
 python "02_Kalman Filter/kalman_filters_comparison.py"
 ```
 
-脚本会输出每种方法的 RMSE，并生成对比图：
+强非线性案例：
+
+```powershell
+python "02_Kalman Filter/strong_nonlinear_ukf_comparison.py"
+```
+
+脚本会输出每种方法的 RMSE 和运行时间，并生成对比图：
 
 ```text
 02_Kalman Filter/outputs/kalman_filters_comparison.png
+02_Kalman Filter/outputs/strong_nonlinear_ukf_comparison.png
 ```
 
 如果缺少依赖，先安装：
@@ -86,6 +124,7 @@ python -m pip install -r "02_Kalman Filter/requirements.txt"
 3. 再看 `ExtendedKalmanFilter2D`：重点理解观测函数 `h_polar()` 和雅可比 `jacobian_h_polar()`。
 4. 最后看 `UnscentedKalmanFilter2D`：重点理解 sigma points 如何绕过手写雅可比。
 5. 对照输出图看误差曲线，思考为什么 KF 在非线性观测转换后通常更吃亏。
+6. 再运行 `strong_nonlinear_ukf_comparison.py`，观察 UKF 为什么能在强非线性下取得更低 RMSE，以及为什么计算时间更高。
 
 ## 图中看什么
 
@@ -93,3 +132,18 @@ python -m pip install -r "02_Kalman Filter/requirements.txt"
 - `Position Error`: 每个时刻的位置误差，越低越好。
 - `RMSE`: 整体均方根误差，越低越好。
 - `Final Estimate`: 最后时刻三种方法的估计位置和真实位置对比。
+- `Cost`: 强非线性图中的平均运行时间，体现效果和计算成本之间的权衡。
+
+## 强非线性案例的一次典型结果
+
+```text
+ KF RMSE: 6.150 | avg run:  2.797 ms
+EKF RMSE: 4.477 | avg run: 18.689 ms
+UKF RMSE: 3.968 | avg run: 37.871 ms
+```
+
+这个结果说明：
+
+- KF 最快，但模型假设最弱，强非线性下误差最大。
+- EKF 比 KF 准很多，但依赖局部线性化。
+- UKF 在这个强非线性案例里 RMSE 最低，但计算时间最高。

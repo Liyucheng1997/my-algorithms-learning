@@ -35,8 +35,9 @@
 当前内容：
 
 - `README.md`：问题设定、三种滤波器特点和学习顺序。
-- `kalman_filters_comparison.py`：三种滤波器的 Python 实现与对比实验。
-- `outputs/kalman_filters_comparison.png`：轨迹、误差曲线和 RMSE 可视化。
+- `kalman_filters_comparison.py`：温和非线性下三种滤波器的 Python 实现与对比实验。
+- `strong_nonlinear_ukf_comparison.py`：强非线性下对比 KF、EKF、UKF 的效果和计算时间。
+- `outputs/`：轨迹、误差曲线、RMSE 和耗时可视化。
 
 ## 推荐学习记录格式
 
